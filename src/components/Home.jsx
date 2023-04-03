@@ -1,10 +1,11 @@
 import React from "react";
-import Constants from "expo-constants";
-import {View, Text, FlatList, StyleSheet} from "react-native";
+import {View, Text, FlatList, StyleSheet, ScrollView} from "react-native";
 import { useState, useEffect } from "react";
 import MealCard from "./MealCard";
+import CategoryList from "./CategoryList";
+import Header from "./Header";
 
-const MealList = () => {
+const Home = () => {
     const [loading, setLoading] = useState(true);
     const [meals, setMeals] = useState(true);
 
@@ -30,7 +31,9 @@ const MealList = () => {
     }
 
     return (
-        <View>
+        <ScrollView>
+            <Header/>
+            <CategoryList/>
             <Text style={styles.titleFeed}>Feed de Comidas</Text>
             <FlatList 
                 data={meals} 
@@ -40,7 +43,7 @@ const MealList = () => {
                     </View>
                 )}
             />
-        </View>
+        </ScrollView>
         
     )
 }
@@ -50,7 +53,7 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
         marginBottom:10,
         marginLeft : 16,
-        marginRight: 16
+        marginRight: 16,
     },
     titleFeed: {
         marginTop: 5,
@@ -60,4 +63,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default MealList
+export default Home

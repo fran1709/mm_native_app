@@ -5,9 +5,6 @@ const Header = () => {
     const [text, onChangeText] = React.useState('Buscar Comida...');
     return (
         <View style={styles.container}>
-            <View >
-                <Text style={styles.title}>Meally Meaty App</Text>
-            </View>
             <View>
                <TextInput
                     editable
@@ -28,11 +25,6 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         paddingBottom: 5,
         paddingTop: 5,
-    },
-    title:{
-        fontWeight: "bold",
-        fontSize: 20,
-        marginLeft:10
     },
     inputText:{
         height: 40,
