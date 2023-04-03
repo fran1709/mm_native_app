@@ -50,8 +50,7 @@ const styles = StyleSheet.create({
         flexDirection:'row',
         justifyContent: "center",
         paddingBottom: 5,
-        display:"flex",
-        marginLeft: 10,
+        padding:7
     },
     titleFeed: {
         marginTop: 5,

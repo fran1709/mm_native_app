@@ -1,5 +1,5 @@
 import React from "react";
-import {View, Text, FlatList, StyleSheet, ScrollView} from "react-native";
+import {View, Text, FlatList, StyleSheet, ScrollView, SafeAreaView, StatusBar} from "react-native";
 import { useState, useEffect } from "react";
 import MealCard from "./MealCard";
 import CategoryList from "./CategoryList";
@@ -31,30 +31,35 @@ const Home = () => {
     }
 
     return (
-        <ScrollView>
-            <Header/>
-            <CategoryList/>
-            <Text style={styles.titleFeed}>Feed de Comidas</Text>
-            <FlatList 
-                data={meals} 
-                renderItem={({item : meal}) =>(
-                    <View key={meal.idMeal} style={styles.container}>
-                        <MealCard {... meal}/>
-                    </View>
-                )}
-            />
-        </ScrollView>
-        
+        <SafeAreaView style={styles.container}>
+             <ScrollView style={styles.scrollView}>
+                <Header/>
+                <CategoryList/>
+                <Text style={styles.titleFeed}>Feed de Comidas</Text>
+                <FlatList 
+                    data={meals} 
+                    renderItem={({item : meal}) =>(
+                        <View key={meal.idMeal} style={styles.container}>
+                            <MealCard {... meal}/>
+                        </View>
+                    )}
+                />
+            </ScrollView>
+        </SafeAreaView>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
-        justifyContent: 'flex-start',
-        marginBottom:10,
-        marginLeft : 16,
-        marginRight: 16,
+        flex: 1,
+        marginBottom: 7,
+        marginLeft:7,
+        marginRight:7,
+        marginTop: 7
     },
+    scrollView: {
+        marginHorizontal: 2,
+      },
     titleFeed: {
         marginTop: 5,
         marginLeft: 15,

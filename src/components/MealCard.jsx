@@ -28,9 +28,10 @@ const MealCard = (meal) => {
 
 const styles = StyleSheet.create({
     container: {
-        padding : 10,
         borderRadius: 16,
-        backgroundColor: 'silver'
+        backgroundColor: 'silver',
+        padding: 10,
+        justifyContent: 'center',
     },
     logo: {
         width: 170,

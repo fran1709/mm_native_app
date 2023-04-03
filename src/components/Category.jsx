@@ -15,7 +15,6 @@ const styles = StyleSheet.create({
         padding : 10,
         borderRadius: 16,
         backgroundColor: 'silver',
-        
     },
     logo: {
         width: 160,
