@@ -25,6 +25,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "85f6ab71-c6b3-43b3-a0e3-7793d5eed7aa"
+      }
+    },
+    "owner": "fran_1709"
   }
 }
