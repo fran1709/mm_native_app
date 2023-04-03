@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     },
     scrollView: {
         marginHorizontal: 2,
-      },
+    },
     titleFeed: {
         marginTop: 5,
         marginLeft: 15,
