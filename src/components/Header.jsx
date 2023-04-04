@@ -1,10 +1,11 @@
 import React from "react";
-import {View, Text, StyleSheet, TextInput} from "react-native";
+import { Button, View, Text, StyleSheet, TextInput} from "react-native";
 
-const Header = () => {
+const Header = ({navigation}) => {
     const [text, onChangeText] = React.useState('Buscar Comida...');
     return (
         <View style={styles.container}>
+            <Text style={styles.title}>Meally Meaty App</Text>
             <View>
                <TextInput
                     editable
@@ -14,7 +15,6 @@ const Header = () => {
                     style={styles.inputText}
                 /> 
             </View>
-            
         </View>
     )
 }
@@ -31,7 +31,13 @@ const styles = StyleSheet.create({
         margin: 12,
         borderWidth: 0.5,
         padding: 10,
-    }
+    },
+    title:{
+        fontWeight: "bold",
+        fontSize: 20,
+        marginLeft:10,
+        padding:10
+    },
 });
 
 export default Header

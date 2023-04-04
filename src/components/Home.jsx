@@ -1,11 +1,11 @@
 import React from "react";
-import {View, Text, FlatList, StyleSheet, ScrollView, SafeAreaView, StatusBar} from "react-native";
+import {Button,View, Text, FlatList, StyleSheet, ScrollView, SafeAreaView, StatusBar} from "react-native";
 import { useState, useEffect } from "react";
 import MealCard from "./MealCard";
 import CategoryList from "./CategoryList";
 import Header from "./Header";
 
-const Home = () => {
+const Home = ({navigation}) => {
     const [loading, setLoading] = useState(true);
     const [meals, setMeals] = useState(true);
 
@@ -31,8 +31,8 @@ const Home = () => {
     }
 
     return (
-        <SafeAreaView style={styles.container}>
-             <ScrollView style={styles.scrollView}>
+        <SafeAreaView style={styles.container}> 
+            <ScrollView style={styles.scrollView}>
                 <Header/>
                 <CategoryList/>
                 <Text style={styles.titleFeed}>Feed de Comidas</Text>
@@ -40,7 +40,7 @@ const Home = () => {
                     data={meals} 
                     renderItem={({item : meal}) =>(
                         <View key={meal.idMeal} style={styles.container}>
-                            <MealCard {... meal}/>
+                            <MealCard meal={meal} navigation={navigation}/>
                         </View>
                     )}
                 />
@@ -52,10 +52,7 @@ const Home = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        marginBottom: 7,
-        marginLeft:7,
-        marginRight:7,
-        marginTop: 7
+        margin: 5
     },
     scrollView: {
         marginHorizontal: 2,

@@ -1,7 +1,7 @@
 import React from "react";
-import {Text, View, Image, StyleSheet} from "react-native";
+import {Text, View, Image, StyleSheet, Button} from "react-native";
 
-const MealCard = (meal) => {
+const MealCard = ({meal, navigation}) => {
     return (
         <View style={styles.container}>
             <View style={{display:'flex', flexDirection:'row'}}>
@@ -22,11 +22,24 @@ const MealCard = (meal) => {
                     </View>
                 </View>
             </View> 
+            <Text></Text>
+            <Button
+                style={styles.button}
+                title="Ir a Receta"
+                onPress={() => navigation.navigate('Detalles', { meal: meal })}
+                
+            />
         </View>
     )
 }
 
 const styles = StyleSheet.create({
+    button:{
+        padding:2,
+        margin:5,
+        borderRadius:10,
+        display:"flex"
+    },
     container: {
         borderRadius: 16,
         backgroundColor: 'silver',
@@ -44,6 +57,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         marginBottom: 10,
         marginLeft: 10,
+        fontSize:20
     },
 });
 

@@ -40,6 +40,7 @@ const CategoryList = () => {
                     </View>
                 )}
             />
+
         </View>
         
     )
