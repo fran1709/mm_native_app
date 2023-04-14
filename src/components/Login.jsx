@@ -4,27 +4,65 @@ import { StyleSheet, Text, View, Image, Button } from 'react-native';
 import * as WebBrowser from 'expo-web-browser';
 import * as Google from 'expo-auth-session/providers/google';
 
-const image = { uri:'https://img.freepik.com/foto-gratis/cucharas-especias-cerca-verduras_23-2147829073.jpg?w=900&t=st=1680502312~exp=1680502912~hmac=0dca4390448a56932c6d31a04e7ed5dcae88904a215513d57f55cbfbd1d2f7c3'};
 WebBrowser.maybeCompleteAuthSession();
 
 const Login = () => {
-  const navigation = useNavigation();
-  const [accessToken, setAccessToken] = React.useState("");
-  const [user, setUser] = React.useState(null);
-  const [request, response, promptAsync] = Google.useAuthRequest({
+  let [showButton, setShowButton] = React.useState(false);
+  let navigation = useNavigation();
+  let [accessToken, setAccessToken] = React.useState(null);
+  let [user, setUser] = React.useState(null);
+  let [request, setRequest] = React.useState(null);
+  let [response, setResponse] = React.useState(null);
+
+  var [requestGoogle, responseGoogle, promptAsyncGoogle] = Google.useAuthRequest({
     clientId: "685170813467-nho11b8i543rkmafaui82cgu0p61f59c.apps.googleusercontent.com",
     iosClientId: "685170813467-okhu1qsroje55l7gfqr9j0iea8sbup63.apps.googleusercontent.com",
     androidClientId: "685170813467-eouv43legte51hqrbps3aj6oi3vmppce.apps.googleusercontent.com"
-  });
+  })
 
   React.useEffect(() => {
-    if(response?.type === "success") {
+    setRequest(requestGoogle);
+    setResponse(responseGoogle);
+  }, [requestGoogle, responseGoogle]);
+
+  const handleSignOut = () => {
+    setAccessToken(null);
+    setUser(null);
+    setRequest(null);
+    setResponse(null);
+  };
+  
+  React.useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      setShowButton(true);
+    }, 3000);
+    return () => clearTimeout(timeoutId);
+  }, []);
+  
+  React.useEffect(() => {
+    if(response?.type === "success" && accessToken) {
       setAccessToken(response.authentication.accessToken);
       accessToken && fetchUserInfo();
     }
-  }, [response, accessToken])
+    else if(response?.type === "success" && !accessToken && request) {
+      setAccessToken(response.authentication.accessToken);
+    }
+  }, [response, accessToken, request]);
+
+
+  React.useEffect(() => {
+    if(response !== null) {
+      const timeoutId = setTimeout(() => {
+        navigation.navigate('Home');
+      }, 1000);
+      return () => clearTimeout(timeoutId);
+    }
+  }, [user, navigation]);
 
   async function fetchUserInfo() {
+    if (accessToken===null) {
+      return;
+    }
     let response = await fetch("https://www.googleapis.com/userinfo/v2/me", {
       headers: { Authorization: `Bearer ${accessToken}` }
     });
@@ -33,43 +71,61 @@ const Login = () => {
   }
 
   const ShowUserInfo = () => {
-    if(user) {
-      return(
-        <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-          <Text style={{fontSize: 35, fontWeight: 'bold', marginBottom: 20}}>Welcome</Text>
-          <Image source={{uri: user.picture}} style={{width: 100, height: 100, borderRadius: 50}} />
-          <Text style={{fontSize: 20, fontWeight: 'bold', marginTop: 20, marginBottom: 20}}>{user.name}</Text>
-          <Button
-             style={styles.button}
-             title="Go to Home"
-             onPress={() => navigation.navigate('Home')}
+    if (user !== null) {
+      return (
+        <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+          <Text style={{ fontSize: 35, fontWeight: "bold", marginBottom: 20 }}>
+            Welcome
+          </Text>
+          <Image
+            source={{ uri: user.picture }}
+            style={{ width: 100, height: 100, borderRadius: 50 }}
           />
+          <Text style={{ fontSize: 20, fontWeight: "bold", marginTop: 20, marginBottom: 20 }}>
+            {user.name}
+          </Text>
+          {showButton && (
+            <Button
+              style={styles.button}
+              title="Go to Home"
+              onPress={() => navigation.navigate("Home")}
+            />
+          )}
+          <Text></Text>
+          {showButton && (
+            <Button
+              style={styles.button}
+              title={"Log Out from Google"}
+              onPress={() => {
+                handleSignOut();
+              }}
+            />
+          )}
         </View>
-      )
+      );
+    } else {
+      return null;
     }
-  }  
+  };
+    
   return (
     <View style={styles.container}>
-      {user && <ShowUserInfo />}
       {user === null &&
           <>
           <Text style={{fontSize: 35, fontWeight: 'bold'}}>Welcome</Text>
           <Text style={{fontSize: 25, fontWeight: 'bold', marginBottom: 20, color: 'gray'}}>Please login</Text>
           <Button
             style={styles.button}
-            title="Sign in with Google"
-            disabled={!request}
+            title={'Sign in with Google'}
+            //disabled={!request}
             onPress={() => {
-                promptAsync();
+              promptAsyncGoogle();
+              //setShowButton(true);
             }}
           />
-         {/*  <Button
-             style={{ marginTop: 10 }}
-             title="Skip and go to Home"
-             onPress={() => navigation.navigate('Home')}
-          /> */}
         </>
       }
+      {user!==null && <ShowUserInfo />}
     </View>
   )
 }
