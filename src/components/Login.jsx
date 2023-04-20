@@ -3,14 +3,14 @@ import { useNavigation } from '@react-navigation/native';
 import { StyleSheet, Text, View, Image, Button } from 'react-native';
 import * as WebBrowser from 'expo-web-browser';
 import * as Google from 'expo-auth-session/providers/google';
+import { useUser } from './UserProvider';
 
 WebBrowser.maybeCompleteAuthSession();
-
 const Login = () => {
   let [showButton, setShowButton] = React.useState(false);
   let navigation = useNavigation();
   let [accessToken, setAccessToken] = React.useState(null);
-  let [user, setUser] = React.useState(null);
+  const { user, setUser } = useUser();
   let [request, setRequest] = React.useState(null);
   let [response, setResponse] = React.useState(null);
 
@@ -107,8 +107,11 @@ const Login = () => {
       return null;
     }
   };
+
+  
     
   return (
+    
     <View style={styles.container}>
       {user === null &&
           <>

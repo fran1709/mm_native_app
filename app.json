@@ -2,6 +2,7 @@
   "expo": {
     "name": "meally-meaty-app",
     "slug": "meally-meaty-app",
+    "scheme": "mmapp",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",

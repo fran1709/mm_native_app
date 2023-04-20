@@ -1,7 +1,39 @@
 import React from "react";
+import { useState, useEffect } from "react";
 import {Text, View, Image, StyleSheet, Button} from "react-native";
+import { db } from "../Firebase";
+import { collection, getDocs } from "@firebase/firestore";
 
 const MealCard = ({meal, navigation}) => {
+    // Conexion a la DB
+    const ratingsCollectionsRef = collection(db, "ratings");
+    const [ratings, setRatings] = useState([]);
+    let calification = 0;
+    let ratingsPromedium = 0;
+    var cont = null;
+
+    useEffect(() => {
+        const getRatings = async () => {
+          //obtiene toda la info de la base de datos en un json
+          const data = await getDocs(ratingsCollectionsRef);
+          //filtra solo la data necesaria (los docs y el id)
+          setRatings(data.docs.map((doc) => ({ ...doc.data(), id : doc.id})));
+        };
+        getRatings();
+    }, []);
+
+    ratings.map((rating) => {
+        if(rating.meal_id == meal.idMeal){
+          cont +=1;
+          calification += parseInt(rating.stars);
+        }
+    })
+    ratingsPromedium = (calification/cont).toFixed(1);
+
+    if (isNaN(ratingsPromedium)) {
+        ratingsPromedium = "-"
+    }
+
     return (
         <View style={styles.container}>
             <View style={{display:'flex', flexDirection:'row'}}>
@@ -18,7 +50,7 @@ const MealCard = ({meal, navigation}) => {
                     <Text></Text><Text> </Text>
                     <View>
                         <Text style={{fontWeight:"bold"}}>Puntuación</Text>
-                        <Text>-</Text>
+                        <Text>{ratingsPromedium.toString()}</Text>
                     </View>
                 </View>
             </View> 

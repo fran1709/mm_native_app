@@ -1,7 +1,6 @@
 import { Picker } from "@react-native-picker/picker";
 import React from "react";
 import { Button, View, Text, StyleSheet, TextInput } from "react-native";
-
 const Header = ({ navigation, setMeals}) => {
 
   const [text, onChangeText] = React.useState("Buscar Comida...");
