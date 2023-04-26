@@ -1,24 +1,17 @@
 import React from "react";
-import {View, Text, StyleSheet, Image, Button, ScrollView, Touchable, TouchableOpacity} from "react-native";
+import {View, Text, StyleSheet, Image, ScrollView, TouchableOpacity} from "react-native";
 import { db } from "../Firebase";
-import { collection, getDocs, addDoc } from "@firebase/firestore";
+import { collection, addDoc } from "@firebase/firestore";
 import { Picker } from "@react-native-picker/picker";
 import CommentSection from "./CommentSection";
 
 const Details = (data) => {
     const meal = data.route.params.meal;
-    const navigation = data.navigation; // accede a la propiedad "navigation"
     const ingredients = [];
 
     // Conexion a la DB
     const ratingsCollectionsRef = collection(db, "ratings");
     const [newRate, setNewRate] = React.useState('');
-
-    const handleRatingInput = (value) => {
-        if (value >= 1 && value <= 5) {
-          setNewRate(value);
-        }
-      };
 
     const createRate = async () => {
         if (newRate){

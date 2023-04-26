@@ -1,5 +1,5 @@
 import React from "react";
-import {Button,View, Text, FlatList, StyleSheet, ScrollView, SafeAreaView, StatusBar} from "react-native";
+import {View, Text, FlatList, StyleSheet, ScrollView, SafeAreaView} from "react-native";
 import { useState, useEffect } from "react";
 import MealCard from "./MealCard";
 import CategoryList from "./CategoryList";
@@ -32,9 +32,9 @@ const Home = ({navigation}) => {
     return (
         <SafeAreaView style={styles.container}> 
             <ScrollView style={styles.scrollView}>
-                <Header/>
-                <CategoryList/>
-                <Text style={styles.titleFeed}>Feed de Comidas</Text>
+                <Header navigation={navigation}/>
+                <CategoryList navigation={navigation}/>
+                <Text style={styles.titleFeed}>Feed of Recipes</Text>
                 <FlatList 
                     data={meals} 
                     renderItem={({item : meal}) =>(

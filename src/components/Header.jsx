@@ -1,6 +1,6 @@
 import { Picker } from "@react-native-picker/picker";
 import React from "react";
-import { Button, View, Text, StyleSheet, TextInput } from "react-native";
+import { TouchableOpacity, View, Text, StyleSheet, TextInput } from "react-native";
 const Header = ({ navigation, setMeals}) => {
 
   const [text, onChangeText] = React.useState("Buscar Comida...");
@@ -42,14 +42,28 @@ const Header = ({ navigation, setMeals}) => {
           <Picker.Item label="Country" value="country" />
         </Picker>
       </View>
-      <Button title="Search" onPress={getMealsApi}>
-
-      </Button>
+      <View style={{justifyContent:'center', alignItems:'center'}}>
+        <TouchableOpacity style={styles.button} onPress={getMealsApi}>
+          <Text style={styles.buttonText}>Search</Text>
+          </TouchableOpacity>  
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  button:{
+    width: 200,
+    height: 30,
+    backgroundColor: '#3f51b5',
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  buttonText: {
+      color: 'white',
+      fontSize: 13,
+  },
   container: {
     flexDirection: "column",
     justifyContent: "center",

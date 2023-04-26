@@ -3,7 +3,7 @@ import {View, Text, FlatList, StyleSheet} from "react-native";
 import { useState, useEffect } from "react";
 import MealCategory from "./Category";
 
-const CategoryList = () => {
+const CategoryList = ({navigation}) => {
     const [loading, setLoading] = useState(true);
     const [categories, setCategorys] = useState(true);
 
@@ -30,17 +30,17 @@ const CategoryList = () => {
 
     return (
         <View>
-            <Text style={styles.titleFeed}>Categorias de Comida</Text>
+            <Text style={styles.titleFeed}>Categories of Recipes</Text>
             <FlatList 
+                reversed={true}
                 horizontal
                 data={categories} 
                 renderItem={({item : category}) =>(
                     <View key={category.idCategory} style={styles.container}>
-                        <MealCategory {... category}/>
+                        <MealCategory category={category} navigation={navigation}/>
                     </View>
                 )}
             />
-
         </View>
         
     )

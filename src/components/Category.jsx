@@ -1,20 +1,38 @@
 import React from "react";
-import {Text, View, Image, StyleSheet} from "react-native";
+import {Text, View, Image, StyleSheet, TouchableOpacity} from "react-native";
 
-const MealCategory = (category) => {
+const MealCategory = ({category, navigation }) => {
     return (
         <View style={styles.container}>
             <Image style={styles.logo} source={{uri: category.strCategoryThumb}}/>
             <Text style={styles.name}>{category.strCategory}</Text>
+            <View style={{justifyContent:'center', alignItems:'center'}}>
+               <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('HomeCategory', { category: category })}>
+                    <Text style={styles.buttonText}>See recipes</Text>
+                </TouchableOpacity> 
+            </View>
         </View>
     )
 }
 
 const styles = StyleSheet.create({
+    button:{
+        width: 90,
+        height: 25,
+        backgroundColor: '#3f51b5',
+        borderRadius: 10,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: 10
+    },
+    buttonText: {
+        color: 'white',
+        fontSize: 13,
+    },
     container: {
         padding : 10,
         borderRadius: 16,
-        backgroundColor: '#eeeeee',
+        backgroundColor: '#F8ECC2',
     },
     logo: {
         width: 160,

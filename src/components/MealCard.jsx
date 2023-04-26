@@ -1,9 +1,8 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import {Text, View, Image, StyleSheet, Button} from "react-native";
+import {Text, View, Image, StyleSheet, TouchableOpacity} from "react-native";
 import { db } from "../Firebase";
 import { collection, getDocs } from "@firebase/firestore";
-import { useFocusEffect } from '@react-navigation/native-stack';
 
 const MealCard = ({meal, navigation}) => {
     // Conexion a la DB
@@ -52,37 +51,43 @@ const MealCard = ({meal, navigation}) => {
                 <View style={{marginLeft:10, display:'flex', flexDirection:'column'}}>
                     <Text> </Text>
                     <View>
-                        <Text style={{fontWeight:"bold"}}>Categoría</Text>
+                        <Text style={{fontWeight:"bold"}}>Category</Text>
                         <Text>{meal.strCategory}</Text>
                     </View>
                     <Text></Text><Text> </Text>
                     <View>
-                        <Text style={{fontWeight:"bold"}}>Puntuación</Text>
+                        <Text style={{fontWeight:"bold"}}>Rate</Text>
                         <Text>{ratingsPromedium.toString()}</Text>
                     </View>
                 </View>
             </View> 
-            <Text></Text>
-            <Button
-                style={styles.button}
-                title="Ir a Receta"
-                onPress={() => navigation.navigate('Detalles', { meal: meal })}
-                
-            />
+            <View style={{justifyContent:'center', alignItems:'center'}}>
+               <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Detalles', { meal: meal })}>
+                <Text style={styles.buttonText}>See details</Text>
+                </TouchableOpacity> 
+            </View>
+            
         </View>
     )
 }
 
 const styles = StyleSheet.create({
     button:{
-        padding:2,
-        margin:5,
-        borderRadius:10,
-        display:"flex"
+        width: 100,
+        height: 30,
+        backgroundColor: '#3f51b5',
+        borderRadius: 10,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: 10
+    },
+    buttonText: {
+        color: 'white',
+        fontSize: 15,
     },
     container: {
         borderRadius: 16,
-        backgroundColor: '#eeeeee',
+        backgroundColor: '#F8ECC2',
         padding: 10,
         justifyContent: 'center',
     },
