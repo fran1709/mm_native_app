@@ -8,7 +8,7 @@ import Header from "./Header";
 const Home = ({navigation}) => {
     const [loading, setLoading] = useState(true);
     const [meals, setMeals] = useState(true);
-
+    
     useEffect(() => {
         async function fetchMeals() {
           const response = await fetch(
@@ -18,7 +18,6 @@ const Home = ({navigation}) => {
           setMeals(data.meals || []);
           setLoading(false);
         }
-        
         fetchMeals();
     }, []);
     

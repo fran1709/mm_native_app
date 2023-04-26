@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import {Text, View, Image, StyleSheet, Button} from "react-native";
 import { db } from "../Firebase";
 import { collection, getDocs } from "@firebase/firestore";
+import { useFocusEffect } from '@react-navigation/native-stack';
 
 const MealCard = ({meal, navigation}) => {
     // Conexion a la DB
@@ -11,6 +12,7 @@ const MealCard = ({meal, navigation}) => {
     let calification = 0;
     let ratingsPromedium = 0;
     var cont = null;
+    let focusListener = null;
 
     useEffect(() => {
         const getRatings = async () => {
@@ -20,6 +22,12 @@ const MealCard = ({meal, navigation}) => {
           setRatings(data.docs.map((doc) => ({ ...doc.data(), id : doc.id})));
         };
         getRatings();
+        focusListener = navigation.addListener('focus', () => {
+            getRatings();
+        });
+        return function cleanUp() {
+            focusListener.remove();
+        };
     }, []);
 
     ratings.map((rating) => {

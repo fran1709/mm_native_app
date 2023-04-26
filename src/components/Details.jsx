@@ -80,11 +80,6 @@ const Details = (data) => {
                 </TouchableOpacity>  
             </View>
             <CommentSection componentId={meal.idMeal}/>
-            <View style={{justifyContent:'center', alignItems:'center'}}>
-               <TouchableOpacity style={styles.button3} onPress={() => navigation.push('Home')}>
-                    <Text style={styles.buttonText}>Go to Home...</Text>
-               </TouchableOpacity>
-            </View>
         </ScrollView>
     )
 }
