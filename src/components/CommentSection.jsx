@@ -1,15 +1,51 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, Text, View, TextInput, Image, TouchableOpacity, FlatList} from 'react-native';
 import { db } from "../Firebase";
 import { collection, getDocs, addDoc } from "@firebase/firestore";
-import { useState, useEffect } from "react";
-import {View, Text, StyleSheet, TextInput, Button, Image, Touchable, TouchableOpacity} from "react-native";
 import { useUser } from './UserProvider';
 
+const Comment = ({ comment }) => {
+  
+  return (
+    <View style={styles.commentContainer}>
+      <Image style={styles.userImage} source={{ uri: comment.user_img }} />
+      <View style={styles.commentTextContainer}>
+        <Text style={styles.userName}>{comment.username}</Text>
+        <Text style={styles.commentText}>{comment.comment}</Text>
+      </View>
+    </View>
+  );
+};
 
-function CommentSection({ componentId }) {
-  const [newComment, setNewComment] = useState("");
+const CommentInput = ({ onSubmit }) => {
+  const [text, setText] = useState('');
+
+  const handleTextChange = (inputText) => {
+    setText(inputText);
+  };
+
+  const handleCommentSubmit = () => {
+    onSubmit(text);
+    setText('');
+  };
+
+  return (
+    <View style={styles.commentInputContainer}>
+      <TextInput
+        style={styles.commentInput}
+        placeholder="Add a comment..."
+        value={text}
+        onChangeText={handleTextChange}
+      />
+      <TouchableOpacity style={styles.commentButton} onPress={handleCommentSubmit}>
+        <Text style={styles.ButtonText}>Submit</Text>
+      </TouchableOpacity>
+    </View>
+  );
+};
+
+export const CommentSection = ({ componentId }) => {
   const [comments, setComments] = useState([]);
-  const [visibleComments, setVisibleComments] = useState(2); // número de comentarios visibles
   const commentsCollectionsRef = collection(db, "commentsApp");
   const { user } = useUser();
 
@@ -23,108 +59,33 @@ function CommentSection({ componentId }) {
     getComments();
   }, []);
 
-  const createComment = async () => {
+  const createComment = async (text) => {
     await addDoc(commentsCollectionsRef, {
       meal_id: componentId,
       username: user.name,
       user_img: user.picture,
-      comment: newComment,
+      comment: text,
     });
     setComments([
       ...comments,
-      { meal_id: componentId, username: user.name, comment: newComment, user_img: user.picture },
+      { meal_id: componentId, username: user.name, comment: text, user_img: user.picture },
     ]);
-    setNewComment("");
   };
 
-  const handleLoadMoreComments = () => {
-    setVisibleComments(visibleComments + 2); // aumenta el número de comentarios visibles por 2
-  };
-    
   return (
-    <View style={styles.container}>
-      <Text style={styles.instructionsTitle}>Add Comment</Text>
-      <View style={{justifyContent:'center', alignItems:'center'}}>
-        <TextInput
-          style={{ borderWidth: 1, borderColor: 'gray', padding: 5, width: 300,}}
-          placeholder="Enter your comment"
-          value={newComment}
-          multiline={true} 
-          textAlignVertical='top' 
-          onChangeText={setNewComment}
-        />
-      </View>
-      <View style={{justifyContent:'center', alignItems:'center'}}>
-        <TouchableOpacity style={styles.button} onPress={createComment} >
-          <Text style={styles.buttonText}>Submit</Text>
-        </TouchableOpacity>
-      </View>
-      
-      <Text style={styles.instructionsTitle}>Comments</Text>
-      {comments.filter((comment) => comment.meal_id == componentId)
-      .slice(0, visibleComments) // muestra solo los primeros visibleComments comentarios
-      .map((comment) => (
-        <View key={comment.id} style={styles.commentContainer}>
-            <Image source={{uri: comment.user_img}} style={styles.userImage}></Image>
-            <View style={styles.commentTextContainer}>
-              <Text style={styles.userName}> {comment.username} </Text>
-              <Text style={styles.commentText}>{comment.comment}</Text>
-            </View>   
-        </View>
-      ))}
-      {comments.filter((comment) => comment.meal_id == componentId).length > visibleComments && (
-        <TouchableOpacity style={styles.button2} onPress={handleLoadMoreComments}>
-          <Text style={styles.buttonText2}>Load more comments</Text>
-        </TouchableOpacity>
-      )}
+    <View>
+      <FlatList
+        data={comments.filter(item => item.meal_id == componentId)}
+        renderItem={({ item }) => <Comment comment={item} />}
+        keyExtractor={(item) => item.id}
+        scrollEnabled={true}
+      />
+      <CommentInput onSubmit={createComment} />
     </View>
+  );
+};
 
-  )
-}
 const styles = StyleSheet.create({
-  
-  button: {
-    width: 120,
-    height: 50,
-    backgroundColor: '#3f51b5',
-    borderRadius: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
-    margin:10
-  },
-  button2: {
-    width: 120,
-    height: 50,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginHorizontal:10,
-  },
-  buttonText2: {
-    color: 'blue',
-    fontSize: 13,
-  },
-  buttonText: {
-      color: 'white',
-      fontSize: 15,
-  },
-  instructionsTitle:{
-      padding:10,
-      fontSize:18,
-      fontWeight:'bold'
-  },
-  strInstructionsContainer:{
-      flex:1,
-      padding:5,
-      justifyContent:'center'
-  },
-  strInstructions:{
-      fontSize:16,
-      justifyContent:'flex-start',
-      padding:5
-  },
-  container:{
-      flexDirection:'column',
-  },
   commentContainer: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -132,10 +93,10 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
   },
   userImage: {
-    width: 30,
-    height: 30,
-    borderRadius: 15,
-    marginRight: 10,
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    marginRight: 8,
   },
   userName: {
     fontWeight: 'bold',
@@ -150,5 +111,37 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
   },
+
+  commentInputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 16,
+    borderTopWidth: StyleSheet.hairlineWidth,
+    borderTopColor: 'rgba(0, 0, 0, 0.1)',
+    paddingVertical: 10
+  },
+  commentInput: {
+    flex: 1,
+    borderWidth: 1,
+    borderColor: 'gray',
+    borderRadius: 10,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    marginRight: 5
+  },
+  commentButton: {
+    width: 75,
+    height: 40,
+    backgroundColor: '#3f51b5',
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    margin:5,
+    fontWeight: 'bold',
+    fontSize: 16
+  }, 
+  ButtonText: {
+    color: 'white',
+    fontSize: 15,
+  }
 });
-export default CommentSection

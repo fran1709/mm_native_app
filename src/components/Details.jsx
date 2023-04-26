@@ -1,9 +1,33 @@
 import React from "react";
-import {View, Text, StyleSheet, Image, ScrollView, TouchableOpacity} from "react-native";
+import {View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, Modal} from "react-native";
 import { db } from "../Firebase";
 import { collection, addDoc } from "@firebase/firestore";
 import { Picker } from "@react-native-picker/picker";
-import CommentSection from "./CommentSection";
+import { CommentSection } from "./CommentSection";
+import {Ionicons} from '@expo/vector-icons'
+
+const CommentButton = ({ item }) => {
+    const [modalVisible, setModalVisible] = React.useState(false);
+
+    return (
+      <View>
+        <TouchableOpacity onPress={() => setModalVisible(true)}>
+        <Text style={styles.commentsTitle}>View Comments</Text>
+        </TouchableOpacity>
+        <Modal visible={modalVisible} animationType="slide">
+          <View style={styles.header}>
+            <Text style={styles.title}>Comments</Text>
+            <TouchableOpacity onPress={() => setModalVisible(false)}>
+                <Ionicons name="close" size={30} color="black" />
+            </TouchableOpacity>
+          </View>
+          <View style={styles.content}>
+            <CommentSection componentId={item}/>
+          </View>
+        </Modal>
+      </View>
+    );
+  };
 
 const Details = (data) => {
     const meal = data.route.params.meal;
@@ -72,7 +96,7 @@ const Details = (data) => {
                 <Text style={styles.buttonText}>Submit Rate</Text>
                 </TouchableOpacity>  
             </View>
-            <CommentSection componentId={meal.idMeal}/>
+            <CommentButton item={meal.idMeal}/>
         </ScrollView>
     )
 }
@@ -114,6 +138,12 @@ const styles = StyleSheet.create({
         fontSize:18,
         fontWeight:'bold',
     },
+    commentsTitle:{
+        padding:10,
+        fontSize:18,
+        fontWeight:'bold',
+        color: '#3f51b5'
+    },
     strInstructionsContainer:{
         flex:1,
         justifyContent:'center'
@@ -133,9 +163,6 @@ const styles = StyleSheet.create({
     container:{
         flexDirection:'column',
     },
-    duoContainer:{
-        flexDirection:'row'
-    },
     picker: {
         flex: 1,
         maxWidth: 175,
@@ -153,6 +180,25 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         marginLeft: 10,
         fontSize:30
+    },
+    header: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        padding: 10,
+        backgroundColor: '#ddd',
+    },
+    title: {
+        fontSize: 18,
+        fontWeight: 'bold',
+    },
+    closeButton: {
+        padding: 10,
+    },
+    content: {
+        flex: 1,
+        padding: 10,
+        backgroundColor: '#fff',
     },
 });
 
