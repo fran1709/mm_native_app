@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
     },
     container: {
         borderRadius: 16,
-        backgroundColor: 'silver',
+        backgroundColor: '#eeeeee',
         padding: 10,
         justifyContent: 'center',
     },

@@ -52,10 +52,12 @@ const Home = ({navigation}) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        margin: 5
+        margin: 5,
+        backgroundColor: '#ffffff'
     },
     scrollView: {
         marginHorizontal: 2,
+        backgroundColor: '#ffffff'
     },
     titleFeed: {
         marginTop: 5,

@@ -1,5 +1,5 @@
 import React from "react";
-import {View, Text, StyleSheet, Image, Button, ScrollView} from "react-native";
+import {View, Text, StyleSheet, Image, Button, ScrollView, Touchable, TouchableOpacity} from "react-native";
 import { db } from "../Firebase";
 import { collection, getDocs, addDoc } from "@firebase/firestore";
 import { Picker } from "@react-native-picker/picker";
@@ -48,7 +48,7 @@ const Details = (data) => {
             
             <Text style={styles.name}>{meal.strMeal}</Text>
             <Image style={styles.logo} source={{uri: meal.strMealThumb}}/>
-            <Text style={styles.ingredientTitle}>Ingredientes</Text>
+            <Text style={styles.ingredientTitle}>Ingredients</Text>
             <View style={{flexDirection:'row'}}>
                 <View style={styles.column}>
                    {firstHalf.map((ingredient, index) => (
@@ -61,15 +61,12 @@ const Details = (data) => {
                     ))} 
                 </View>
             </View>
-            <Text style={styles.instructionsTitle}>Instrucciones</Text>
+            <Text style={styles.instructionsTitle}>Instructions</Text>
             <View style={styles.strInstructionsContainer}>
                 <Text style={styles.strInstructions}>{meal.strInstructions}</Text>
             </View>
             <Text style={styles.instructionsTitle}>Rate this recipe</Text>
-            <Picker
-                selectedValue={newRate}
-                onValueChange={(value) => setNewRate(value)}
-                >
+            <Picker selectedValue={newRate} onValueChange={(value) => setNewRate(value)} >
                 <Picker.Item label="Select rating" value={null} />
                 <Picker.Item label="1" value={1} />
                 <Picker.Item label="2" value={2} />
@@ -77,47 +74,68 @@ const Details = (data) => {
                 <Picker.Item label="4" value={4} />
                 <Picker.Item label="5" value={5} />
             </Picker>
-            <Button title="Submit Rate" onPress={createRate} />
+            <View style={{justifyContent:'center', alignItems:'center'}}>
+              <TouchableOpacity style={styles.button} title="Submit Rate" onPress={createRate}>
+                <Text style={styles.buttonText}>Submit Rate</Text>
+                </TouchableOpacity>  
+            </View>
             <CommentSection componentId={meal.idMeal}/>
-            <Button
-                style={styles.button}
-                title="Go to Home... again"
-                onPress={() => navigation.push('Home')}
-            />
+            <View style={{justifyContent:'center', alignItems:'center'}}>
+               <TouchableOpacity style={styles.button3} onPress={() => navigation.push('Home')}>
+                    <Text style={styles.buttonText}>Go to Home...</Text>
+               </TouchableOpacity>
+            </View>
         </ScrollView>
     )
 }
 
 const styles = StyleSheet.create({
     button: {
-        backgroundColor: "#f9c2ff",
-        color: "#fff",
-        padding: 10,
-        borderRadius: 5,
+        width: 120,
+        height: 50,
+        backgroundColor: '#3f51b5',
+        borderRadius: 10,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    button3: {
+        width: 120,
+        height: 50,
+        backgroundColor: '#3f51b5',
+        borderRadius: 10,
+        alignItems: 'center',
+        justifyContent: 'center',
+        margin: 10,
+    },
+    buttonText: {
+        color: 'white',
+        fontSize: 15,
     },
     column: {
         flex: 1,
         paddingHorizontal: 10,
     },
     instructionsTitle:{
-        padding:10,
         fontSize:18,
-        fontWeight:'bold'
+        fontWeight:'bold',
+        marginHorizontal: 10,
+        marginTop: 10
     },
     ingredientTitle:{
         padding:10,
         fontSize:18,
-        fontWeight:'bold'
+        fontWeight:'bold',
     },
     strInstructionsContainer:{
         flex:1,
-        padding:5,
         justifyContent:'center'
     },
     strInstructions:{
         fontSize:16,
-        justifyContent:'flex-start',
-        padding:5
+        justifyContent:'center',
+        alignItems:'center',
+        padding:5,
+        margin:10
     },
     strIngredient:{
         flex:1,
@@ -125,7 +143,7 @@ const styles = StyleSheet.create({
         flexDirection:'row'
     },
     container:{
-        flexDirection:'column'
+        flexDirection:'column',
     },
     duoContainer:{
         flexDirection:'row'

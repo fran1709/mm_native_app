@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
     container: {
         padding : 10,
         borderRadius: 16,
-        backgroundColor: 'silver',
+        backgroundColor: '#eeeeee',
     },
     logo: {
         width: 160,
