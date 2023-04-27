@@ -62,7 +62,6 @@ const Details = (data) => {
 
     return (
         <ScrollView style={styles.container}>
-            
             <Text style={styles.name}>{meal.strMeal}</Text>
             <Image style={styles.logo} source={{uri: meal.strMealThumb}}/>
             <Text style={styles.ingredientTitle}>Ingredients</Text>

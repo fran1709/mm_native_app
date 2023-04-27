@@ -44,28 +44,27 @@ const MealCard = ({meal, navigation}) => {
     return (
         <View style={styles.container}>
             <View style={{display:'flex', flexDirection:'row'}}>
-                <View>
-                    <Text style={styles.name}>{meal.strMeal}</Text>
+                <View style={{display:'flex', flexDirection:'column'}}>
+                    <Text style={styles.name} numberOfLines={1} ellipsizeMode="tail">{meal.strMeal.length > 19 ? meal.strMeal.substring(0, 19) + "..." : meal.strMeal}</Text>
                     <Image style={styles.logo} source={{uri: meal.strMealThumb}}/>
                 </View>
-                <View style={{marginLeft:10, display:'flex', flexDirection:'column'}}>
-                    <Text> </Text>
-                    <View>
+                <View style={{marginLeft:20,marginTop:30, display:'flex', flexDirection:'column'}}>
+                    <View >
                         <Text style={{fontWeight:"bold"}}>Category</Text>
                         <Text>{meal.strCategory}</Text>
                     </View>
-                    <Text></Text><Text> </Text>
-                    <View>
+                    <View style={{marginTop:3}}>
                         <Text style={{fontWeight:"bold"}}>Rate</Text>
                         <Text>{ratingsPromedium.toString()}</Text>
                     </View>
+                    <View style={{justifyContent:'center', alignItems:'center'}}>
+                    <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Detalles', { meal: meal })}>
+                        <Text style={styles.buttonText}>See details</Text>
+                        </TouchableOpacity> 
+                    </View>
                 </View>
             </View> 
-            <View style={{justifyContent:'center', alignItems:'center'}}>
-               <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Detalles', { meal: meal })}>
-                <Text style={styles.buttonText}>See details</Text>
-                </TouchableOpacity> 
-            </View>
+            
             
         </View>
     )
@@ -102,9 +101,8 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         marginBottom: 10,
         marginLeft: 10,
-        fontSize:20
+        fontSize:18
     },
 });
-
 
 export default MealCard

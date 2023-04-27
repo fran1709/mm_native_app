@@ -2,12 +2,13 @@ import React from "react";
 import {Text, View, Image, StyleSheet, TouchableOpacity} from "react-native";
 
 const MealCategory = ({category, navigation }) => {
+    //console.log(category.strCategory);
     return (
         <View style={styles.container}>
             <Image style={styles.logo} source={{uri: category.strCategoryThumb}}/>
             <Text style={styles.name}>{category.strCategory}</Text>
             <View style={{justifyContent:'center', alignItems:'center'}}>
-               <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('HomeCategory', { category: category })}>
+               <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('HomeCategory', { categoryData: category })}>
                     <Text style={styles.buttonText}>See recipes</Text>
                 </TouchableOpacity> 
             </View>
