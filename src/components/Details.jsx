@@ -12,7 +12,7 @@ const CommentButton = ({ item }) => {
     return (
       <View>
         <TouchableOpacity onPress={() => setModalVisible(true)}>
-        <Text style={styles.commentsTitle}>View Comments</Text>
+            <Text style={styles.commentsTitle}>View Comments</Text>
         </TouchableOpacity>
         <Modal visible={modalVisible} animationType="slide">
           <View style={styles.header}>

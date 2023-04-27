@@ -58,14 +58,12 @@ const MealCard = ({meal, navigation}) => {
                         <Text>{ratingsPromedium.toString()}</Text>
                     </View>
                     <View style={{justifyContent:'center', alignItems:'center'}}>
-                    <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Detalles', { meal: meal })}>
-                        <Text style={styles.buttonText}>See details</Text>
+                        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Detalles', { meal: meal })}>
+                            <Text style={styles.buttonText}>See details</Text>
                         </TouchableOpacity> 
                     </View>
                 </View>
             </View> 
-            
-            
         </View>
     )
 }
@@ -73,7 +71,7 @@ const MealCard = ({meal, navigation}) => {
 const styles = StyleSheet.create({
     button:{
         width: 100,
-        height: 30,
+        height: 40,
         backgroundColor: '#3f51b5',
         borderRadius: 10,
         alignItems: 'center',
@@ -89,6 +87,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#F8ECC2',
         padding: 10,
         justifyContent: 'center',
+        flex:1,
+        margin: 5
     },
     logo: {
         width: 170,

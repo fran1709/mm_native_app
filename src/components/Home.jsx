@@ -38,9 +38,7 @@ const Home = ({navigation}) => {
                 <FlatList 
                     data={meals} 
                     renderItem={({item : meal}) =>(
-                        <View key={meal.idMeal} style={styles.container}>
-                            <MealCard meal={meal} navigation={navigation}/>
-                        </View>
+                        <MealCard meal={meal} navigation={navigation}/>
                     )}
                 />
             </ScrollView>
