@@ -10,6 +10,7 @@ import Login from "./Login";
 import HomeCategory from "./HomeCategory";
 import MealCategory from "./Category";
 import CategoryList from "./CategoryList";
+import SearchResults from "./SearchResults";
 
 const Stack = createNativeStackNavigator();
 LogBox.ignoreAllLogs();
@@ -27,6 +28,7 @@ const Main = () => {
                 <Stack.Screen name='HomeCategory' component={HomeCategory} />
                 <Stack.Screen name='Category' component={MealCategory}/>
                 <Stack.Screen name='CategoryList' component={CategoryList}/>
+                <Stack.Screen name='SearchResults' component={SearchResults}/>
             </Stack.Navigator>
         </View>
     )

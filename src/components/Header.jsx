@@ -1,24 +1,17 @@
 import { Picker } from "@react-native-picker/picker";
 import React from "react";
-import { TouchableOpacity, View, Text, StyleSheet, TextInput } from "react-native";
-const Header = ({ navigation, setMeals}) => {
+import { useState, useEffect } from "react";
+import {
+  TouchableOpacity,
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+} from "react-native";
 
-  const [text, onChangeText] = React.useState("Buscar Comida...");
-  const [selectedSearch, setSelectedSearch] = React.useState('');
-
-  const getMealsApi = async () => {
-    var response;
-    switch(selectedSearch){
-        case "name":
-            response = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${text}`);
-        case "ingredients":
-            response = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?i=${text}`);
-        case "country":
-            response = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?a=${text}`);
-    }
-    let json = await response.json();
-    console.log(json);
-  };
+const Header = ({ navigation }) => {
+  const [meal, setChangeMeal] = useState("Buscar Comida...");
+  const [selectedSearch, setSelectedSearch] = useState("");
 
   return (
     <View style={styles.container}>
@@ -27,7 +20,7 @@ const Header = ({ navigation, setMeals}) => {
         <TextInput
           editable
           maxLength={30}
-          onChangeText={onChangeText}
+          onChangeText={(itemValue) => setChangeMeal(itemValue)}
           placeholder={"Search recipe..."}
           style={styles.inputText}
         />
@@ -42,34 +35,43 @@ const Header = ({ navigation, setMeals}) => {
           <Picker.Item label="Country" value="country" />
         </Picker>
       </View>
-      <View style={{justifyContent:'center', alignItems:'center'}}>
-        <TouchableOpacity style={styles.button} onPress={getMealsApi}>
+      <View style={{ justifyContent: "center", alignItems: "center" }}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() =>
+            navigation.navigate(
+              "SearchResults",
+              {meal : meal, 
+              selectedSearch : selectedSearch}
+            )
+          }
+        >
           <Text style={styles.buttonText}>Search</Text>
-          </TouchableOpacity>  
+        </TouchableOpacity>
       </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  button:{
+  button: {
     width: 200,
     height: 30,
-    backgroundColor: '#3f51b5',
+    backgroundColor: "#3f51b5",
     borderRadius: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   buttonText: {
-      color: 'white',
-      fontSize: 13,
+    color: "white",
+    fontSize: 13,
   },
   container: {
     flexDirection: "column",
     justifyContent: "center",
     paddingBottom: 5,
     paddingTop: 5,
-    backgroundColor:'#ffffff'
+    backgroundColor: "#ffffff",
   },
   searchContainer: {
     flexDirection: "row",
