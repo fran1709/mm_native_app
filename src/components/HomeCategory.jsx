@@ -12,19 +12,18 @@ const HomeCategory = ({ route, navigation }) => {
 
   // Solicitando json de comidas con ese tipo de categoria
   async function fetchCategory() {
-    const response0 = await fetch(apiUrl);
-    const data0 = await response0.json();
-    const ids = data0.meals.map((meal) => meal.idMeal);
-    const mealRequests = ids.map(async (id) => {
-      const response = await fetch(
-        `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`
-      );
-      const data = await response.json();
-      return data.meals[0];
-    });
-    const meals = await Promise.all(mealRequests);
-    setMeals(meals);
-    setLoading(false);
+  const response = await fetch(apiUrl);
+  const data = await response.json();
+  const mealRequests = data.meals.map(async (meal) => {
+    const response = await fetch(
+      `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${meal.idMeal}`
+    );
+    const data = await response.json();
+    return data.meals[0];
+  });
+  const meals = await Promise.all(mealRequests);
+  setMeals(meals);
+  setLoading(false);
   }
 
   useEffect(() => {

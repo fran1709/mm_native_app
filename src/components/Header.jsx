@@ -30,6 +30,7 @@ const Header = ({ navigation }) => {
           onValueChange={(itemValue) => setSelectedSearch(itemValue)}
           prompt="Search by:"
         >
+          <Picker.Item label="Select a search option" value={null} />
           <Picker.Item label="Name" value="name" />
           <Picker.Item label="Ingredient" value="ingredient" />
           <Picker.Item label="Country" value="country" />
@@ -38,13 +39,13 @@ const Header = ({ navigation }) => {
       <View style={{ justifyContent: "center", alignItems: "center" }}>
         <TouchableOpacity
           style={styles.button}
-          onPress={() =>
-            navigation.navigate(
-              "SearchResults",
-              {meal : meal, 
-              selectedSearch : selectedSearch}
-            )
-          }
+          onPress={() => {
+            navigation.navigate("SearchResults", {
+              meal: meal,
+              selectedSearch: selectedSearch,
+            });
+            setSelectedSearch("");
+          }}
         >
           <Text style={styles.buttonText}>Search</Text>
         </TouchableOpacity>

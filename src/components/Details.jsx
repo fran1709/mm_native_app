@@ -82,7 +82,7 @@ const Details = (data) => {
                 <Text style={styles.strInstructions}>{meal.strInstructions}</Text>
             </View>
             <Text style={styles.instructionsTitle}>Rate this recipe</Text>
-            <Picker selectedValue={newRate} onValueChange={(value) => setNewRate(value)} >
+            <Picker selectedValue={newRate} onValueChange={(value) => setNewRate(value)} prompt="Rate this recipe:">
                 <Picker.Item label="Select rating" value={null} />
                 <Picker.Item label="1" value={1} />
                 <Picker.Item label="2" value={2} />

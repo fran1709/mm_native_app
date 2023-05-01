@@ -39,7 +39,15 @@ const SearchResults = ({ route, navigation }) => {
       `https://www.themealdb.com/api/json/v1/1/filter.php?a=${meal}`
     );
     const data = await response.json();
-    setMeals(data.meals||[]);
+    const mealRequests = data.meals.map(async (meal) => {
+      const response = await fetch(
+        `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${meal.idMeal}`
+      );
+      const data = await response.json();
+      return data.meals[0];
+    });
+    const meals = await Promise.all(mealRequests);
+    setMeals(meals);
   }
 
   async function fetchByIngredient() {
@@ -47,8 +55,15 @@ const SearchResults = ({ route, navigation }) => {
       `https://www.themealdb.com/api/json/v1/1/filter.php?i=${meal}`
     );
     const data = await response.json();
-    setMeals(data.meals||[]);
-    
+    const mealRequests = data.meals.map(async (meal) => {
+      const response = await fetch(
+        `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${meal.idMeal}`
+      );
+      const data = await response.json();
+      return data.meals[0];
+    });
+    const meals = await Promise.all(mealRequests);
+    setMeals(meals); 
   }
   
   if (loading) {
@@ -64,9 +79,9 @@ const SearchResults = ({ route, navigation }) => {
         <Text style={styles.titleFeed}>Recipes found</Text>
         <FlatList
           data={meals}
+          keyExtractor={(item) => item.meal_id}
           renderItem={({ item: meal }) => (
               <MealCard meal={meal} navigation={navigation} />
-            
           )}
         />
     </SafeAreaView>
