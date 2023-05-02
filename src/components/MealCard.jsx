@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
     button:{
         width: 100,
         height: 40,
-        backgroundColor: '#3f51b5',
+        backgroundColor: '#b3434c',
         borderRadius: 10,
         alignItems: 'center',
         justifyContent: 'center',
@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
     },
     container: {
         borderRadius: 16,
-        backgroundColor: '#F8ECC2',
+        backgroundColor: 'white',
         padding: 10,
         justifyContent: 'center',
         flex:1,

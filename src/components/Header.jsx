@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
   button: {
     width: 200,
     height: 30,
-    backgroundColor: "#3f51b5",
+    backgroundColor: "#b3434c",
     borderRadius: 10,
     alignItems: "center",
     justifyContent: "center",
@@ -72,7 +72,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     paddingBottom: 5,
     paddingTop: 5,
-    backgroundColor: "#ffffff",
+    backgroundColor: "#D2B48C",
+    borderRadius:10
   },
   searchContainer: {
     flexDirection: "row",
@@ -83,16 +84,21 @@ const styles = StyleSheet.create({
     borderWidth: 0.5,
     padding: 10,
     width: 170,
+    backgroundColor:"white",
+    borderRadius: 10
   },
   picker: {
     flex: 1,
     maxWidth: 175,
+    color:"black",
+    borderRadius: 10,
   },
   title: {
     fontWeight: "bold",
     fontSize: 20,
     marginLeft: 10,
     padding: 10,
+    color:"black"
   },
 });
 

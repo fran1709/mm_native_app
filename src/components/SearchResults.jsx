@@ -92,7 +92,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     margin: 7,
-    backgroundColor: "#ffffff",
+    backgroundColor: "#8B0000",
+    borderRadius: 10
   },
   scrollView: {
     marginHorizontal: 2,
@@ -103,6 +104,7 @@ const styles = StyleSheet.create({
     marginLeft: 15,
     marginBottom: 10,
     fontWeight: "bold",
+    color:"white"
   },
 });
 

@@ -12,18 +12,18 @@ const HomeCategory = ({ route, navigation }) => {
 
   // Solicitando json de comidas con ese tipo de categoria
   async function fetchCategory() {
-  const response = await fetch(apiUrl);
-  const data = await response.json();
-  const mealRequests = data.meals.map(async (meal) => {
-    const response = await fetch(
-      `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${meal.idMeal}`
-    );
-    const data = await response.json();
-    return data.meals[0];
-  });
-  const meals = await Promise.all(mealRequests);
-  setMeals(meals);
-  setLoading(false);
+      const response = await fetch(apiUrl);
+      const data = await response.json();
+      const mealRequests = data.meals.map(async (meal) => {
+        const response = await fetch(
+          `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${meal.idMeal}`
+        );
+        const data = await response.json();
+        return data.meals[0];
+      });
+      const meals = await Promise.all(mealRequests);
+      setMeals(meals);
+      setLoading(false);
   }
 
   useEffect(() => {
@@ -45,7 +45,6 @@ const HomeCategory = ({ route, navigation }) => {
           data={meals}
           renderItem={({ item: meal }) => (
               <MealCard meal={meal} navigation={navigation} />
-            
           )}
         />
     </SafeAreaView>
@@ -56,7 +55,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     margin: 7,
-    backgroundColor: "#ffffff",
+    backgroundColor: "#b3434c",
+    borderRadius: 10
   },
   scrollView: {
     marginHorizontal: 2,
@@ -67,6 +67,7 @@ const styles = StyleSheet.create({
     marginLeft: 15,
     marginBottom: 10,
     fontWeight: "bold",
+    color:"white"
   },
 });
 

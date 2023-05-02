@@ -21,20 +21,19 @@ const CategoryList = ({navigation}) => {
     }, []);
     
     if (loading) {
-        return <Text>Loading categories...</Text>;
+        return <Text style={styles.titleFeed}>Loading categories...</Text>;
     }
     
     if (categories.length === 0) {
-    return <Text>No categories found.</Text>;
+    return <Text style={styles.titleFeed}>No categories found.</Text>;
     }
 
     return (
         <View>
             <Text style={styles.titleFeed}>Categories of Recipes</Text>
-            <FlatList 
-                reversed={true}
+            <FlatList
                 horizontal
-                data={categories} 
+                data={categories.sort((a, b) => a.strCategory.localeCompare(b.strCategory))}
                 renderItem={({item : category}) =>(
                     <View key={category.idCategory} style={styles.container}>
                         <MealCategory category={category} navigation={navigation}/>
@@ -57,7 +56,8 @@ const styles = StyleSheet.create({
         marginTop: 5,
         marginLeft: 15,
         marginBottom: 10,
-        fontWeight:"bold"
+        fontWeight:"bold",
+        color: "white"
     },
 });
 

@@ -36,7 +36,7 @@ const Home = ({navigation}) => {
                 <CategoryList navigation={navigation}/>
                 <Text style={styles.titleFeed}>Feed of Recipes</Text>
                 <FlatList 
-                    data={meals} 
+                    data={meals.sort((a, b) => a.strMeal.localeCompare(b.strMeal))}
                     renderItem={({item : meal}) =>(
                         <MealCard meal={meal} navigation={navigation}/>
                     )}
@@ -50,17 +50,20 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         margin: 5,
-        backgroundColor: '#ffffff'
+        backgroundColor: '#D2B48C',
+        borderRadius: 10
     },
     scrollView: {
         marginHorizontal: 2,
-        backgroundColor: '#ffffff'
+        backgroundColor: '#b3434c',
+        borderRadius: 10
     },
     titleFeed: {
         marginTop: 5,
         marginLeft: 15,
         marginBottom: 10,
-        fontWeight:"bold"
+        fontWeight:"bold",
+        color:"white"
     }
 });
 

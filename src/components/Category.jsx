@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
     button:{
         width: 90,
         height: 25,
-        backgroundColor: '#3f51b5',
+        backgroundColor: '#b3434c',
         borderRadius: 10,
         alignItems: 'center',
         justifyContent: 'center',
@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     container: {
         padding : 10,
         borderRadius: 16,
-        backgroundColor: '#F8ECC2',
+        backgroundColor: 'white',
     },
     logo: {
         width: 160,
